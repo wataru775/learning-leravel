@@ -1,0 +1,8 @@
+vendor
+node_modules
+/.env
+.idea
+.phpunit.result.cache
+/coverage
+package-lock.json
+/report.xml
