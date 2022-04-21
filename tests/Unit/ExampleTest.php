@@ -2,17 +2,25 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use App\Models\Book;
+use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function test_that_true_is_true()
+    public function setup(): void
     {
-        $this->assertTrue(true);
+        parent::setUp();
+        $this->artisan('migrate');
+        $this->seed('BooksSeeder');
+    }
+
+    /**
+     * 直接DB参照できること
+     */
+    public function test_direct_access()
+    {
+        $book = Book::find(1);
+
+        $this->assertEquals('ドメイン特化言語 パターンで学ぶDSLのベストプラクティス46項目' , $book->title);
     }
 }
