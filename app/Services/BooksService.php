@@ -18,7 +18,7 @@ class BooksService
      * @param int $id 取得するDB ID
      * @return string|null タイトル
      */
-    public function serveTitle(int $id) : ?string{
+    public function serveTitle(int $id , bool $kakko = true) : ?string{
         $book = $this->booksRepository->find($id);
 
         // データが取れているかの判断
@@ -27,7 +27,7 @@ class BooksService
             return null;
 
         }
-        $title = ' 「 ' . $book->title . ' 」 ';
+        $title = $kakko ? ' 「 ' . $book->title . ' 」 ' : $book->title;
 
         return $title;
     }

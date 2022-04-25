@@ -29,6 +29,9 @@ class BooksServiceTest extends TestCase
         $title = $booksService->serveTitle(1);
         $this->assertEquals(' 「 ドメイン特化言語 パターンで学ぶDSLのベストプラクティス46項目 」 ' , $title);
 
+        $title = $booksService->serveTitle(1 , false);
+        $this->assertEquals('ドメイン特化言語 パターンで学ぶDSLのベストプラクティス46項目' , $title);
+
         $title = $booksService->serveTitle(2);
         $this->assertEquals(' 「 ３月のライオン(１３) 」 ' , $title);
     }
