@@ -49,6 +49,11 @@ class BooksServiceTest extends TestCase
         $book = $booksService->serve(2);
         $this->assertEquals(' 「 ３月のライオン(１３) 」 ' , $book->title);
         $this->assertEquals('羽海野チカ' , $book->author);
+
+        $booksService = new BooksService($authorService);
+        $book = $booksService->serve(3);
+        $this->assertEquals(' 「 ゼロから作るDeep Learning ―Pythonで学ぶディープラーニングの理論と実装 」 ' , $book->title);
+        $this->assertNull($book->author);
     }
 
     /**
