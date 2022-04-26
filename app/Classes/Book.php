@@ -15,4 +15,8 @@ class Book
      * @var string 書籍タイトル
      */
     public string $title;
+    /**
+     * @var string|null 著者名
+     */
+    public ?string $author;
 }

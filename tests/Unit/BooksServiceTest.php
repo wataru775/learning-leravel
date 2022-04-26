@@ -3,7 +3,9 @@
 namespace Tests\Unit;
 
 use App\Services\BooksService;
+use App\Services\SearchAuthorService;
 use Tests\TestCase;
+use Mockery;
 
 /**
  * 書籍情報サービスを試験します
@@ -22,16 +24,32 @@ class BooksServiceTest extends TestCase
      */
     public function test_service(){
         // サービスを作成します
-        $booksService = new BooksService();
+        $authorService = Mockery::mock(SearchAuthorService::class);
+        $this->instance(SearchAuthorService::class, $authorService);
+        $authorService
+            ->shouldReceive('search')
+            ->andReturn('マーチン ファウラー');
+
+        $booksService = new BooksService($authorService);
 
         $book = $booksService->serve(1);
         $this->assertEquals(' 「 ドメイン特化言語 パターンで学ぶDSLのベストプラクティス46項目 」 ' , $book->title);
+        $this->assertEquals('マーチン ファウラー', $book->author);
 
         $book = $booksService->serve(1 , false);
         $this->assertEquals('ドメイン特化言語 パターンで学ぶDSLのベストプラクティス46項目' , $book->title);
+        $this->assertEquals('マーチン ファウラー', $book->author);
 
+
+        $authorService = Mockery::mock(SearchAuthorService::class);
+        $this->instance(SearchAuthorService::class, $authorService);
+        $authorService
+            ->shouldReceive('search')
+            ->andReturn('羽海野チカ');
+        $booksService = new BooksService($authorService);
         $book = $booksService->serve(2);
         $this->assertEquals(' 「 ３月のライオン(１３) 」 ' , $book->title);
+        $this->assertEquals('羽海野チカ' , $book->author);
     }
 
     /**
@@ -39,7 +57,8 @@ class BooksServiceTest extends TestCase
      */
     public function test_over(){
         // サービスを作成します
-        $booksService = new BooksService();
+        $authorService = new SearchAuthorService();
+        $booksService = new BooksService($authorService);
 
         $book = $booksService->serve(999);
         $this->assertNull($book , '範囲外の場合はnullとなります');
