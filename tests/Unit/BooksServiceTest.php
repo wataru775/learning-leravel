@@ -34,6 +34,9 @@ class BooksServiceTest extends TestCase
             ->shouldReceive('search')
             ->with('３月のライオン(１３)')
             ->andReturn('羽海野チカ');
+        $authorService
+            ->shouldReceive('search')
+            ->andReturn('不明');
 
         $booksService = new BooksService($authorService);
 
@@ -53,7 +56,7 @@ class BooksServiceTest extends TestCase
         $booksService = new BooksService($authorService);
         $book = $booksService->serve(3);
         $this->assertEquals(' 「 ゼロから作るDeep Learning ―Pythonで学ぶディープラーニングの理論と実装 」 ' , $book->title);
-        $this->assertNull($book->author);
+        $this->assertEquals('不明' , $book->author);
     }
 
     /**
