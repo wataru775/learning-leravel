@@ -2,15 +2,12 @@
 
 namespace App\Services;
 
-use App\Repositories\BooksRepository;
+use App\Models\Book as BookModel;
 
 class BooksService
 {
 
-    public BooksRepository $booksRepository;
-
-    public function __construct(BooksRepository $repository){
-        $this->booksRepository = $repository;
+    public function __construct(){
     }
 
     /**
@@ -19,14 +16,14 @@ class BooksService
      * @return string|null タイトル
      */
     public function serveTitle(int $id , bool $kakko = true) : ?string{
-        $book = $this->booksRepository->find($id);
+        $book = BookModel::find($id);
 
-        // データが取れているかの判断
+        // データが取れたかの判断
         if($book === null){
-            // 取れていない場合はnullを返す
+            // データが取れない場合の例外
             return null;
-
         }
+
         $title = $kakko ? ' 「 ' . $book->title . ' 」 ' : $book->title;
 
         return $title;
