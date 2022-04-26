@@ -38,7 +38,7 @@ class BooksService
 
         try {
             // 著者情報を取得します
-            $currentBook->author = $this->authorService->search($currentBook->title);
+            $currentBook->author = $this->authorService->search($book->title);
         } catch (Exception $e) {
             Log::debug($e);
         }
