@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Classes\Book;
 use App\Models\Book as BookModel;
 
 class BooksService
@@ -13,9 +14,9 @@ class BooksService
     /**
      * DBのタイトルを取得する
      * @param int $id 取得するDB ID
-     * @return string|null タイトル
+     * @return Book|null 書籍情報
      */
-    public function serve(int $id , bool $kakko = true) : ?string{
+    public function serve(int $id , bool $kakko = true) : ?Book{
         $book = BookModel::find($id);
 
         // データが取れたかの判断
@@ -24,8 +25,10 @@ class BooksService
             return null;
         }
 
-        $title = $kakko ? ' 「 ' . $book->title . ' 」 ' : $book->title;
+        $currentBook = new Book();
 
-        return $title;
+        $currentBook->title = $kakko ? ' 「 ' . $book->title . ' 」 ' : $book->title;
+
+        return $currentBook;
     }
 }
