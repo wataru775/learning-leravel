@@ -28,7 +28,12 @@ class BooksServiceTest extends TestCase
         $this->instance(SearchAuthorService::class, $authorService);
         $authorService
             ->shouldReceive('search')
+            ->with('ドメイン特化言語 パターンで学ぶDSLのベストプラクティス46項目')
             ->andReturn('マーチン ファウラー');
+        $authorService
+            ->shouldReceive('search')
+            ->with('３月のライオン(１３)')
+            ->andReturn('羽海野チカ');
 
         $booksService = new BooksService($authorService);
 
@@ -39,13 +44,7 @@ class BooksServiceTest extends TestCase
         $book = $booksService->serve(1 , false);
         $this->assertEquals('ドメイン特化言語 パターンで学ぶDSLのベストプラクティス46項目' , $book->title);
         $this->assertEquals('マーチン ファウラー', $book->author);
-
-
-        $authorService = Mockery::mock(SearchAuthorService::class);
-        $this->instance(SearchAuthorService::class, $authorService);
-        $authorService
-            ->shouldReceive('search')
-            ->andReturn('羽海野チカ');
+        
         $booksService = new BooksService($authorService);
         $book = $booksService->serve(2);
         $this->assertEquals(' 「 ３月のライオン(１３) 」 ' , $book->title);
