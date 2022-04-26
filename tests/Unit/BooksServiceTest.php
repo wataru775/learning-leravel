@@ -24,13 +24,13 @@ class BooksServiceTest extends TestCase
         // サービスを作成します
         $booksService = new BooksService();
 
-        $title = $booksService->serveTitle(1);
+        $title = $booksService->serve(1);
         $this->assertEquals(' 「 ドメイン特化言語 パターンで学ぶDSLのベストプラクティス46項目 」 ' , $title);
 
-        $title = $booksService->serveTitle(1 , false);
+        $title = $booksService->serve(1 , false);
         $this->assertEquals('ドメイン特化言語 パターンで学ぶDSLのベストプラクティス46項目' , $title);
 
-        $title = $booksService->serveTitle(2);
+        $title = $booksService->serve(2);
         $this->assertEquals(' 「 ３月のライオン(１３) 」 ' , $title);
     }
 
@@ -41,13 +41,13 @@ class BooksServiceTest extends TestCase
         // サービスを作成します
         $booksService = new BooksService();
 
-        $title = $booksService->serveTitle(999);
+        $title = $booksService->serve(999);
         $this->assertNull($title , '範囲外の場合はnullとなります');
 
-        $title = $booksService->serveTitle(0);
+        $title = $booksService->serve(0);
         $this->assertNull($title , '値が0の場合はnullとなります');
 
-        $title = $booksService->serveTitle(-999 );
+        $title = $booksService->serve(-999 );
         $this->assertNull($title, 'マイナスの場合はnullとなります');
     }
 }

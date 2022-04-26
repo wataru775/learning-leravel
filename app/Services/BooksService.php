@@ -15,7 +15,7 @@ class BooksService
      * @param int $id 取得するDB ID
      * @return string|null タイトル
      */
-    public function serveTitle(int $id , bool $kakko = true) : ?string{
+    public function serve(int $id , bool $kakko = true) : ?string{
         $book = BookModel::find($id);
 
         // データが取れたかの判断
