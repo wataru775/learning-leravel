@@ -18,5 +18,5 @@ class Book
     /**
      * @var string|null 著者名
      */
-    public ?string $author;
+    public ?string $author = null;
 }
