@@ -23,8 +23,7 @@ class BooksServiceTest extends TestCase
      */
     public function test_service(){
         // サービスを作成します
-        $repository = new BooksRepository();
-        $booksService = new BooksService($repository);
+        $booksService = new BooksService();
 
         $title = $booksService->serveTitle(1);
         $this->assertEquals(' 「 ドメイン特化言語 パターンで学ぶDSLのベストプラクティス46項目 」 ' , $title);
@@ -41,8 +40,7 @@ class BooksServiceTest extends TestCase
      */
     public function test_over(){
         // サービスを作成します
-        $repository = new BooksRepository();
-        $booksService = new BooksService($repository);
+        $booksService = new BooksService();
 
         $title = $booksService->serveTitle(999);
         $this->assertNull($title , '範囲外の場合はnullとなります');
