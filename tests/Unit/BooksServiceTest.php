@@ -6,6 +6,7 @@ use App\Services\BooksService;
 use App\Services\SearchAuthorService;
 use Tests\TestCase;
 use Mockery;
+use Exception;
 
 /**
  * 書籍情報サービスを試験します
@@ -57,7 +58,18 @@ class BooksServiceTest extends TestCase
         $this->assertEquals(' 「 ゼロから作るDeep Learning ―Pythonで学ぶディープラーニングの理論と実装 」 ' , $book->title);
         $this->assertEquals('不明' , $book->author);
     }
+    public function test_service_exception(){
+        // サービスを作成します
+        $authorService = Mockery::mock(SearchAuthorService::class);
+        $authorService
+            ->shouldReceive('search')
+            ->andThrow(new Exception('不明'));
 
+        $booksService = new BooksService($authorService);
+        $book = $booksService->serve(1);
+        $this->assertEquals(' 「 ドメイン特化言語 パターンで学ぶDSLのベストプラクティス46項目 」 ' , $book->title);
+        $this->assertEquals(null , $book->author);
+    }
     /**
      * サービスの範囲外の試験
      */
